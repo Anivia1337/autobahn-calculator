@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unlimited Autobahn</title>
+<meta name="description" content="Every derestricted Autobahn section in Germany, plus a route planner that shows how much of your trip has no speed limit and how long it takes.">
+<link rel="stylesheet" href="/autobahn/vendor/leaflet.css">
+<link rel="stylesheet" href="/autobahn/stil.css">
+<script src="/autobahn/vendor/leaflet.min.js" defer></script>
+<script src="/autobahn/app.js" defer></script>
+</head>
+<body>
+<aside class="leiste">
+  <header class="titelleiste">
+    <h1>Unlimited Autobahn</h1>
+    <p class="leise">Every German motorway section without a speed limit. Plan a trip and see what your speed buys you.</p>
+  </header>
+
+  <form id="formular" class="karte-block" autocomplete="off">
+    <label>From <input id="von" list="vorschlaege" placeholder="City, address or click the map" required></label>
+    <label>To <input id="nach" list="vorschlaege" placeholder="City, address or click the map" required></label>
+    <datalist id="vorschlaege"></datalist>
+    <button class="knopf" type="submit">Calculate route</button>
+    <p id="status" class="leise" role="status"></p>
+  </form>
+
+  <section class="karte-block">
+    <label class="regler">Speed on unlimited sections <output id="v-wert">200 km/h</output>
+      <input id="v" type="range" min="130" max="300" step="5" value="200"></label>
+    <label class="regler">Share you can actually drive that fast <output id="a-wert">70 %</output>
+      <input id="a" type="range" min="0" max="100" step="5" value="70"></label>
+    <p class="leise klein">The rest of each unlimited section is counted at the recommended 130 km/h (traffic, roadworks, trucks overtaking).</p>
+  </section>
+
+  <section id="ergebnis" class="karte-block" hidden>
+    <dl class="zahlen">
+      <div><dt>Distance</dt><dd id="r-strecke"></dd></div>
+      <div><dt>Unlimited</dt><dd id="r-frei"></dd></div>
+      <div><dt>Your time</dt><dd id="r-zeit"></dd></div>
+      <div><dt>At 130 km/h</dt><dd id="r-130"></dd></div>
+    </dl>
+    <p id="r-gewinn" class="gewinn"></p>
+    <h2>Unlimited stretches on this route</h2>
+    <ol id="r-liste" class="liste"></ol>
+  </section>
+
+  <footer class="leise klein">
+    <p><span class="legende frei"></span> unlimited <span class="legende bedingt"></span> unlimited with conditions (time, weather) <span class="legende route"></span> your route</p>
+    <p id="stand">Loading sections&hellip;</p>
+    <p>Map data &copy; OpenStreetMap contributors (ODbL). Routing by OSRM, search by Photon. OSM can lag behind new signs, so always follow what's posted on the road.</p>
+  </footer>
+</aside>
+<main id="karte"></main>
+</body>
+</html>
